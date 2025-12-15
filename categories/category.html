@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CA~Boutique | Categoría</title>
+  <!-- ... resto del head igual ... -->
+</head>
+<body>
+  <!-- ... header igual ... -->
+
+  <script>
+    // Obtener la categoría de la URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const category = urlParams.get('cat');
+    
+    // Mapeo de nombres amigables
+    const categoryNames = {
+      'hombre': 'Hombre',
+      'mujer': 'Mujer',
+      'ninos': 'Niños',
+      'accesorios': 'Accesorios',
+      'cuidado': 'Cuidado Personal'
+    };
+    
+    // Actualizar título y contenido
+    document.addEventListener('DOMContentLoaded', () => {
+      const categoryName = categoryNames[category] || 'Productos';
+      document.title = `CA~Boutique | ${categoryName}`;
+      document.querySelector('.hero h1').textContent = categoryName;
+      
+      // Filtrar productos
+      const container = document.getElementById('productosCategoria');
+      const filteredProducts = products.filter(p => p.category === category);
+      
+      // Mostrar productos
+      if (filteredProducts.length === 0) {
+        container.innerHTML = `<p class="no-products">Próximamente más productos en esta categoría...</p>`;
+      } else {
+        container.innerHTML = filteredProducts.map(product => `
+          <div class="product-card">
+            <img src="${product.image}" alt="${product.name}" class="product-img">
+            <div class="product-info">
+              <h3>${product.name}</h3>
+              <p class="category">${categoryName}</p>
+              <p class="price">$${product.price.toLocaleString('es-MX')}</p>
+            </div>
+          </div>
+        `).join('');
+      }
+    });
+  </script>
+</body>
+</html>
