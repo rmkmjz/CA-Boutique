@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CA~Boutique | Ropa y Accesorios de Calidad</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/open-close.css">
+  <link rel="icon" href="img/logo.png">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Raleway:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- Indicador de horario (se actualiza automáticamente) -->
+  <div class="status-bar" id="storeStatus">
+    <span class="status-dot" id="statusDot"></span>
+    <span class="status-text" id="statusText">Verificando horario...</span>
+  </div>
+
+  <!-- Header con logo y menú -->
+  <header>
+    <div class="container">
+      <a href="index.html" class="logo">
+        <img src="img/logo.png" alt="CA~Boutique Logo">
+        <h1>CA<span class="tilde">~</span>Boutique</h1>
+      </a>
+      
+      <nav>
+        <ul>
+          <li><a href="categories/hombre.html">Hombre</a></li>
+          <li><a href="categories/mujer.html">Mujer</a></li>
+          <li><a href="categories/ninos.html">Niños</a></li>
+          <li><a href="categories/accesorios.html">Accesorios</a></li>
+          <li><a href="categories/cuidado-personal.html">Cuidado Personal</a></li>
+          <li><a href="#contacto">Contacto</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero section con horario destacado -->
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Elegancia para toda la familia</h1>
+      <p>Descubre nuestra colección de ropa, zapatos y accesorios de alta calidad</p>
+      <div class="horario-destacado">
+        <h2>Nuestro Horario</h2>
+        <p>Lunes a sábado: 9:00 AM - 12:00 PM y 2:00 PM - 5:00 PM</p>
+        <p>Domingo: 9:00 AM - 1:00 AM</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Banner promocional -->
+  <section class="banner">
+    <p>✨ ¡ENVÍOS GRATIS en compras superiores a $1,500 MXN! ✨</p>
+  </section>
+
+  <!-- Catálogo destacado -->
+  <section class="catalogo">
+    <div class="container">
+      <h2>Nuestras Colecciones</h2>
+      <div class="categorias-grid">
+        <a href="categories/hombre.html" class="categoria-card hombre">
+          <h3>Hombre</h3>
+          <p>Ropa, zapatos, joyería y accesorios</p>
+        </a>
+        <a href="categories/mujer.html" class="categoria-card mujer">
+          <h3>Mujer</h3>
+          <p>Vestidos, blusas, zapatos y más</p>
+        </a>
+        <a href="categories/ninos.html" class="categoria-card ninos">
+          <h3>Niños</h3>
+          <p>Ropa cómoda y divertida</p>
+        </a>
+        <a href="categories/accesorios.html" class="categoria-card accesorios">
+          <h3>Accesorios</h3>
+          <p>Bolsos, cinturones, relojes</p>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Productos destacados -->
+  <section class="productos-destacados">
+    <div class="container">
+      <h2>Productos Destacados</h2>
+      <div class="productos-grid" id="productosDestacados">
+        <!-- Se llena dinámicamente con JavaScript -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Contacto -->
+  <section id="contacto" class="contacto">
+    <div class="container">
+      <h2>Visítanos</h2>
+      <div class="info-contacto">
+        <div class="direccion">
+          <h3>Dirección</h3>
+          <p>Calle Elegante #123<br>Col. Moda, Ciudad de México<br>CP 12345</p>
+        </div>
+        <div class="telefono">
+          <h3>Teléfono</h3>
+          <p>+52 55 1234 5678</p>
+          <p>WhatsApp: +52 1 55 8765 4321</p>
+        </div>
+        <div class="horario">
+          <h3>Horario</h3>
+          <p>Lunes a sábado: 9:00 AM - 12:00 PM y 2:00 PM - 5:00 PM</p>
+          <p>Domingo: 9:00 AM - 1:00 AM</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <p>&copy; 2025 CA~Boutique. Todos los derechos reservados.</p>
+      <p>Diseñado con ❤️ para amantes de la moda</p>
+    </div>
+  </footer>
+
+  <script src="js/products.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
