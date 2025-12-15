@@ -3,51 +3,130 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CA~Boutique | Categoría</title>
-  <!-- ... resto del head igual ... -->
+  <title>Categoría | CA~Boutique</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/open-close.css">
+  <link rel="icon" href="../img/logo.png">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800&family=Raleway:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
-  <!-- ... header igual ... -->
+  <div class="status-bar" id="storeStatus">
+    <span class="status-dot" id="statusDot"></span>
+    <span class="status-text" id="statusText">Verificando horario...</span>
+  </div>
 
-  <script>
-    // Obtener la categoría de la URL
-    const urlParams = new URLSearchParams(window.location.search);
-    const category = urlParams.get('cat');
-    
-    // Mapeo de nombres amigables
-    const categoryNames = {
-      'hombre': 'Hombre',
-      'mujer': 'Mujer',
-      'ninos': 'Niños',
-      'accesorios': 'Accesorios',
-      'cuidado': 'Cuidado Personal'
-    };
-    
-    // Actualizar título y contenido
-    document.addEventListener('DOMContentLoaded', () => {
-      const categoryName = categoryNames[category] || 'Productos';
-      document.title = `CA~Boutique | ${categoryName}`;
-      document.querySelector('.hero h1').textContent = categoryName;
+  <header>
+    <div class="container">
+      <a href="../index.html" class="logo">
+        <img src="../img/logo.png" alt="CA~Boutique Logo">
+        <h1>CA<span class="tilde">~</span>Boutique</h1>
+      </a>
       
-      // Filtrar productos
+      <button class="menu-toggle">
+        <i class="fas fa-bars"></i>
+      </button>
+      
+      <nav>
+        <ul>
+          <li><a href="category.html?cat=hombre">Hombre</a></li>
+          <li><a href="category.html?cat=mujer">Mujer</a></li>
+          <li><a href="category.html?cat=ninos">Niños</a></li>
+          <li><a href="category.html?cat=accesorios">Accesorios</a></li>
+          <li><a href="category.html?cat=cuidado">Cuidado Personal</a></li>
+          <li><a href="../index.html#contacto" class="highlight">Contacto</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero categoria-hero" id="categoriaHero">
+    <div class="hero-content">
+      <h1 id="categoriaTitulo">Categoría</h1>
+      <p id="categoriaDescripcion">Descubre nuestra exclusiva colección</p>
+    </div>
+  </section>
+
+  <section class="productos-destacados">
+    <div class="container">
+      <h2>Productos de <span id="categoriaNombre">la Categoría</span></h2>
+      <div class="productos-grid" id="productosCategoria">
+        <!-- Se llena dinámicamente -->
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <p>&copy; <span id="currentYear">2025</span> CA~Boutique. Todos los derechos reservados.</p>
+      <p><a href="../index.html" style="color: var(--accent-light); text-decoration: none;">
+        <i class="fas fa-arrow-left"></i> Volver al inicio
+      </a></p>
+    </div>
+  </footer>
+
+  <script src="../js/products.js"></script>
+  <script src="../js/main.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const category = urlParams.get('cat');
+      
+      const categoryNames = {
+        'hombre': { nombre: 'Hombre', desc: 'Estilo y sofisticación masculina', color: '#2d2d2d' },
+        'mujer': { nombre: 'Mujer', desc: 'Elegancia y distinción femenina', color: '#a52a2a' },
+        'ninos': { nombre: 'Niños', desc: 'Comodidad y diversión infantil', color: '#4682b4' },
+        'accesorios': { nombre: 'Accesorios', desc: 'Detalles que marcan la diferencia', color: '#8c7b6b' },
+        'cuidado': { nombre: 'Cuidado Personal', desc: 'Belleza y bienestar', color: '#5a7d5a' }
+      };
+      
+      const categoria = categoryNames[category] || { nombre: 'Productos', desc: 'Nuestra colección', color: '#8B735B' };
+      
+      // Actualizar la página
+      document.title = `CA~Boutique | ${categoria.nombre}`;
+      document.getElementById('categoriaTitulo').textContent = categoria.nombre;
+      document.getElementById('categoriaDescripcion').textContent = categoria.desc;
+      document.getElementById('categoriaNombre').textContent = categoria.nombre;
+      
+      // Cambiar color del hero
+      const hero = document.getElementById('categoriaHero');
+      if (hero) {
+        hero.style.background = `linear-gradient(135deg, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.5) 100%), ${categoria.color}`;
+      }
+      
+      // Filtrar y mostrar productos
       const container = document.getElementById('productosCategoria');
       const filteredProducts = products.filter(p => p.category === category);
       
-      // Mostrar productos
       if (filteredProducts.length === 0) {
-        container.innerHTML = `<p class="no-products">Próximamente más productos en esta categoría...</p>`;
+        container.innerHTML = `
+          <div style="grid-column: 1/-1; text-align: center; padding: 60px;">
+            <i class="fas fa-box-open" style="font-size: 3rem; color: var(--primary-light); margin-bottom: 20px;"></i>
+            <h3 style="color: var(--primary); margin-bottom: 15px;">Próximamente más productos</h3>
+            <p style="color: var(--secondary-light); max-width: 400px; margin: 0 auto;">
+              Estamos preparando nuevas incorporaciones para esta categoría.
+              ¡Vuelve pronto!
+            </p>
+          </div>
+        `;
       } else {
-        container.innerHTML = filteredProducts.map(product => `
-          <div class="product-card">
-            <img src="${product.image}" alt="${product.name}" class="product-img">
+        container.innerHTML = filteredProducts.map((product, index) => `
+          <div class="product-card" style="animation-delay: ${index * 0.1}s">
+            <div class="product-img-container">
+              <img src="${product.image}" alt="${product.name}" class="product-img">
+              <div class="product-badge">Nuevo</div>
+            </div>
             <div class="product-info">
               <h3>${product.name}</h3>
-              <p class="category">${categoryName}</p>
-              <p class="price">$${product.price.toLocaleString('es-MX')}</p>
+              <p class="category">${categoria.nombre}</p>
+              <p class="price">${product.price.toLocaleString('es-MX')}</p>
             </div>
           </div>
         `).join('');
       }
+      
+      // Actualizar año en footer
+      document.getElementById('currentYear').textContent = new Date().getFullYear();
     });
   </script>
 </body>

@@ -3,123 +3,209 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CA~Boutique | Ropa y Accesorios de Calidad</title>
+  <meta name="description" content="CA~Boutique - Elegancia y moda para toda la familia. Ropa, accesorios y cuidado personal de la más alta calidad.">
+  <meta name="keywords" content="ropa, moda, accesorios, boutique, elegancia, familia, calidad">
+  <title>CA~Boutique | Elegancia y Moda de Calidad</title>
+  
+  <!-- CSS -->
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/open-close.css">
-  <link rel="icon" href="img/logo.png">
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Raleway:wght@300;400;600&display=swap" rel="stylesheet">
+  
+  <!-- Favicon -->
+  <link rel="icon" href="img/logo.png" type="image/png">
+  
+  <!-- Fuentes de Google -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800&family=Raleway:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Font Awesome para íconos -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  
+  <!-- Preconnect para recursos externos -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 </head>
 <body>
-  <!-- Indicador de horario (se actualiza automáticamente) -->
+  <!-- Preloader (se añade dinámicamente) -->
+  
+  <!-- Indicador de horario -->
   <div class="status-bar" id="storeStatus">
     <span class="status-dot" id="statusDot"></span>
     <span class="status-text" id="statusText">Verificando horario...</span>
   </div>
 
-  <!-- Header con logo y menú -->
+  <!-- Header profesional -->
   <header>
     <div class="container">
       <a href="index.html" class="logo">
-        <img src="img/logo.png" alt="CA~Boutique Logo">
+        <img src="img/logo.png" alt="CA~Boutique Logo - Elegancia y Moda" loading="lazy">
         <h1>CA<span class="tilde">~</span>Boutique</h1>
       </a>
       
-      <nav>
+      <button class="menu-toggle" aria-label="Menú de navegación">
+        <i class="fas fa-bars"></i>
+      </button>
+      
+      <nav aria-label="Navegación principal">
         <ul>
-            <li><a href="categories/category.html?cat=hombre">Hombre</a></li>
-            <li><a href="categories/category.html?cat=mujer">Mujer</a></li>
-            <li><a href="categories/category.html?cat=ninos">Niños</a></li>
-            <li><a href="categories/category.html?cat=accesorios">Accesorios</a></li>
-            <li><a href="categories/category.html?cat=cuidado">Cuidado Personal</a></li>
+          <li><a href="categories/category.html?cat=hombre" class="nav-link">
+            <i class="fas fa-user"></i> Hombre
+          </a></li>
+          <li><a href="categories/category.html?cat=mujer" class="nav-link">
+            <i class="fas fa-user-female"></i> Mujer
+          </a></li>
+          <li><a href="categories/category.html?cat=ninos" class="nav-link">
+            <i class="fas fa-child"></i> Niños
+          </a></li>
+          <li><a href="categories/category.html?cat=accesorios" class="nav-link">
+            <i class="fas fa-gem"></i> Accesorios
+          </a></li>
+          <li><a href="categories/category.html?cat=cuidado" class="nav-link">
+            <i class="fas fa-spa"></i> Cuidado Personal
+          </a></li>
+          <li><a href="#contacto" class="nav-link highlight">
+            <i class="fas fa-map-marker-alt"></i> Contacto
+          </a></li>
         </ul>
       </nav>
     </div>
   </header>
 
-  <!-- Hero section con horario destacado -->
-  <section class="hero">
+  <!-- Hero Section Mejorada -->
+  <section class="hero" aria-label="Presentación principal">
     <div class="hero-content">
-      <h1>Elegancia para toda la familia</h1>
-      <p>Descubre nuestra colección de ropa, zapatos y accesorios de alta calidad</p>
+      <h1>Elegancia que Inspira</h1>
+      <p>Descubre nuestra exclusiva colección de moda, diseñada para realzar tu estilo único.</p>
+      
       <div class="horario-destacado">
-        <h2>Nuestro Horario</h2>
-        <p>Lunes a sábado: 9:00 AM - 12:00 PM y 2:00 PM - 5:00 PM</p>
-        <p>Domingo: 9:00 AM - 1:00 AM</p>
+        <h2><i class="fas fa-clock"></i> Nuestro Horario</h2>
+        <p><strong>Lunes a sábado:</strong> 9:00 AM - 12:00 PM y 2:00 PM - 5:00 PM</p>
+        <p><strong>Domingo:</strong> 9:00 AM - 1:00 AM</p>
+        <p class="highlight" style="margin-top: 15px; font-size: 1.1rem;">
+          <i class="fas fa-star"></i> Siempre a tu servicio
+        </p>
       </div>
     </div>
   </section>
 
-  <!-- Banner promocional -->
-  <section class="banner">
-    <p>✨ ¡ENVÍOS GRATIS en compras superiores a $1,500 MXN! ✨</p>
+  <!-- Banner Promocional Animado -->
+  <section class="banner" aria-label="Oferta especial">
+    <p>
+      <i class="fas fa-gift"></i> 
+      ¡ENVÍO GRATIS en compras superiores a $1,500 MXN! 
+      <i class="fas fa-gift"></i>
+    </p>
   </section>
 
-  <!-- Catálogo destacado -->
-  <section class="catalogo">
+  <!-- Catálogo de Categorías -->
+  <section class="catalogo" aria-label="Nuestras colecciones">
     <div class="container">
-      <h2>Nuestras Colecciones</h2>
+      <h2>Colecciones Exclusivas</h2>
+      <p class="section-subtitle" style="text-align: center; margin-bottom: 40px; font-size: 1.2rem; color: var(--primary);">
+        Descubre lo mejor de cada categoría
+      </p>
+      
       <div class="categorias-grid">
-        <a href="categories/hombre.html" class="categoria-card hombre">
+        <a href="categories/category.html?cat=hombre" class="categoria-card hombre" aria-label="Colección para hombre">
           <h3>Hombre</h3>
-          <p>Ropa, zapatos, joyería y accesorios</p>
+          <p>Estilo y sofisticación masculina</p>
         </a>
-        <a href="categories/mujer.html" class="categoria-card mujer">
+        
+        <a href="categories/category.html?cat=mujer" class="categoria-card mujer" aria-label="Colección para mujer">
           <h3>Mujer</h3>
-          <p>Vestidos, blusas, zapatos y más</p>
+          <p>Elegancia y distinción femenina</p>
         </a>
-        <a href="categories/ninos.html" class="categoria-card ninos">
+        
+        <a href="categories/category.html?cat=ninos" class="categoria-card ninos" aria-label="Colección para niños">
           <h3>Niños</h3>
-          <p>Ropa cómoda y divertida</p>
+          <p>Comodidad y diversión infantil</p>
         </a>
-        <a href="categories/accesorios.html" class="categoria-card accesorios">
+        
+        <a href="categories/category.html?cat=accesorios" class="categoria-card accesorios" aria-label="Colección de accesorios">
           <h3>Accesorios</h3>
-          <p>Bolsos, cinturones, relojes</p>
+          <p>Detalles que marcan la diferencia</p>
         </a>
       </div>
     </div>
   </section>
 
-  <!-- Productos destacados -->
-  <section class="productos-destacados">
+  <!-- Productos Destacados -->
+  <section class="productos-destacados" aria-label="Productos destacados">
     <div class="container">
-      <h2>Productos Destacados</h2>
+      <h2>Destacados de la Temporada</h2>
+      <p class="section-subtitle" style="text-align: center; margin-bottom: 60px; font-size: 1.2rem; color: var(--primary);">
+        Lo más vendido y recomendado
+      </p>
+      
       <div class="productos-grid" id="productosDestacados">
         <!-- Se llena dinámicamente con JavaScript -->
       </div>
     </div>
   </section>
 
-  <!-- Contacto -->
-  <section id="contacto" class="contacto">
+  <!-- Sección de Contacto -->
+  <section id="contacto" class="contacto" aria-label="Información de contacto">
     <div class="container">
-      <h2>Visítanos</h2>
+      <h2>Visítanos y Descubre la Diferencia</h2>
+      <p class="section-subtitle" style="text-align: center; margin-bottom: 60px; font-size: 1.2rem; color: var(--accent-light);">
+        Tu elegancia es nuestra prioridad
+      </p>
+      
       <div class="info-contacto">
         <div class="direccion">
-          <h3>Dirección</h3>
+          <h3><i class="fas fa-map-marker-alt"></i> Dirección</h3>
           <p>Calle Elegante #123<br>Col. Moda, Ciudad de México<br>CP 12345</p>
+          <p style="margin-top: 15px;">
+            <i class="fas fa-subway"></i> A 2 cuadras del metro
+          </p>
         </div>
+        
         <div class="telefono">
-          <h3>Teléfono</h3>
-          <p>+52 55 1234 5678</p>
-          <p>WhatsApp: +52 1 55 8765 4321</p>
+          <h3><i class="fas fa-phone-alt"></i> Teléfonos</h3>
+          <p><strong>Teléfono:</strong> +52 55 1234 5678</p>
+          <p><strong>WhatsApp:</strong> +52 1 55 8765 4321</p>
+          <p style="margin-top: 15px;">
+            <i class="fas fa-envelope"></i> info@ca-boutique.com
+          </p>
         </div>
+        
         <div class="horario">
-          <h3>Horario</h3>
-          <p>Lunes a sábado: 9:00 AM - 12:00 PM y 2:00 PM - 5:00 PM</p>
-          <p>Domingo: 9:00 AM - 1:00 AM</p>
+          <h3><i class="fas fa-clock"></i> Horario</h3>
+          <p><strong>Lunes a sábado:</strong><br>9:00 AM - 12:00 PM<br>2:00 PM - 5:00 PM</p>
+          <p><strong>Domingo:</strong><br>9:00 AM - 1:00 AM</p>
+          <p style="margin-top: 15px;">
+            <i class="fas fa-car"></i> Estacionamiento gratuito
+          </p>
         </div>
       </div>
     </div>
   </section>
 
+  <!-- Footer Mejorado -->
   <footer>
     <div class="container">
-      <p>&copy; 2025 CA~Boutique. Todos los derechos reservados.</p>
-      <p>Diseñado con ❤️ para amantes de la moda</p>
+      <p>&copy; <span id="currentYear">2025</span> CA~Boutique. Todos los derechos reservados.</p>
+      <p>Diseñado con <i class="fas fa-heart" style="color: #ff6b6b;"></i> para los amantes de la moda</p>
+      <div style="margin-top: 20px;">
+        <a href="#" aria-label="Instagram" style="color: white; margin: 0 10px; font-size: 1.3rem;">
+          <i class="fab fa-instagram"></i>
+        </a>
+        <a href="#" aria-label="Facebook" style="color: white; margin: 0 10px; font-size: 1.3rem;">
+          <i class="fab fa-facebook-f"></i>
+        </a>
+        <a href="#" aria-label="WhatsApp" style="color: white; margin: 0 10px; font-size: 1.3rem;">
+          <i class="fab fa-whatsapp"></i>
+        </a>
+      </div>
     </div>
   </footer>
 
+  <!-- JavaScript -->
   <script src="js/products.js"></script>
   <script src="js/main.js"></script>
+  
+  <!-- Script para año actual -->
+  <script>
+    document.getElementById('currentYear').textContent = new Date().getFullYear();
+  </script>
 </body>
 </html>

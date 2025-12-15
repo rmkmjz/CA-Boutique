@@ -3,43 +3,97 @@
   top: 0;
   left: 0;
   width: 100%;
-  background: rgba(45, 45, 45, 0.95);
+  background: linear-gradient(90deg, var(--secondary) 0%, var(--secondary-light) 100%);
   color: white;
-  padding: 8px 0;
+  padding: 12px 0;
   text-align: center;
   font-weight: 600;
-  font-size: 1.1rem;
-  z-index: 2000;
-  backdrop-filter: blur(5px);
-  box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+  font-size: 1.05rem;
+  z-index: 2001;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  letter-spacing: 0.5px;
+}
+
+.status-open {
+  background: linear-gradient(90deg, #2E7D32 0%, #4CAF50 100%);
+  animation: statusPulse 2s infinite;
+}
+
+.status-closed {
+  background: linear-gradient(90deg, #C62828 0%, #F44336 100%);
 }
 
 .status-dot {
   display: inline-block;
-  width: 12px;
-  height: 12px;
+  width: 14px;
+  height: 14px;
   border-radius: 50%;
-  margin-right: 8px;
+  margin-right: 12px;
+  vertical-align: middle;
+  box-shadow: 0 0 15px currentColor;
+  position: relative;
+}
+
+.status-dot::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 6px;
+  height: 6px;
+  background: white;
+  border-radius: 50%;
+  opacity: 0.8;
 }
 
 .status-open .status-dot {
   background-color: #4CAF50;
-  box-shadow: 0 0 10px #4CAF50;
+  box-shadow: 0 0 20px rgba(76, 175, 80, 0.7);
+  animation: dotPulse 2s infinite;
 }
 
 .status-closed .status-dot {
-  background-color: #f44336;
-  box-shadow: 0 0 10px #f44336;
+  background-color: #F44336;
+  box-shadow: 0 0 20px rgba(244, 67, 54, 0.7);
+}
+
+@keyframes statusPulse {
+  0%, 100% { 
+    box-shadow: 0 4px 20px rgba(76, 175, 80, 0.3);
+  }
+  50% { 
+    box-shadow: 0 4px 30px rgba(76, 175, 80, 0.6);
+  }
+}
+
+@keyframes dotPulse {
+  0%, 100% { 
+    transform: scale(1);
+    box-shadow: 0 0 15px rgba(76, 175, 80, 0.7);
+  }
+  50% { 
+    transform: scale(1.1);
+    box-shadow: 0 0 25px rgba(76, 175, 80, 1);
+  }
 }
 
 @media (max-width: 768px) {
   .status-bar {
-    font-size: 0.95rem;
-    padding: 6px 0;
+    font-size: 0.9rem;
+    padding: 10px 0;
   }
   
   .status-dot {
     width: 10px;
     height: 10px;
+    margin-right: 8px;
+  }
+  
+  .status-dot::after {
+    width: 4px;
+    height: 4px;
   }
 }
