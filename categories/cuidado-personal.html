@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CA~Boutique | Cuidado Personal</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/open-close.css">
+  <link rel="icon" href="../img/logo.png">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Raleway:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- Indicador de horario -->
+  <div class="status-bar" id="storeStatus">
+    <span class="status-dot" id="statusDot"></span>
+    <span class="status-text" id="statusText">Verificando horario...</span>
+  </div>
+
+  <!-- Header -->
+  <header>
+    <div class="container">
+      <a href="../index.html" class="logo">
+        <img src="../img/logo.png" alt="CA~Boutique Logo">
+        <h1>CA<span class="tilde">~</span>Boutique</h1>
+      </a>
+      
+      <nav>
+        <ul>
+          <li><a href="hombre.html">Hombre</a></li>
+          <li><a href="mujer.html">Mujer</a></li>
+          <li><a href="ninos.html">Niños</a></li>
+          <li><a href="accesorios.html">Accesorios</a></li>
+          <li><a href="cuidado-personal.html">Cuidado Personal</a></li>
+          <li><a href="../index.html#contacto">Contacto</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero section -->
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Cuidado Personal</h1>
+      <p>Productos de belleza y cuidado para tu bienestar</p>
+    </div>
+  </section>
+
+  <!-- Productos de cuidado personal -->
+  <section class="productos-destacados">
+    <div class="container">
+      <h2>Productos de Cuidado Personal</h2>
+      <div class="productos-grid" id="productosCategoria">
+        <!-- Se llena con JavaScript -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Contacto -->
+  <section id="contacto" class="contacto">
+    <div class="container">
+      <h2>Visítanos</h2>
+      <div class="info-contacto">
+        <div class="direccion">
+          <h3>Dirección</h3>
+          <p>Calle Elegante #123<br>Col. Moda, Ciudad de México<br>CP 12345</p>
+        </div>
+        <div class="telefono">
+          <h3>Teléfono</h3>
+          <p>+52 55 1234 5678</p>
+          <p>WhatsApp: +52 1 55 8765 4321</p>
+        </div>
+        <div class="horario">
+          <h3>Horario</h3>
+          <p>Lunes a sábado: 9:00 AM - 12:00 PM y 2:00 PM - 5:00 PM</p>
+          <p>Domingo: 9:00 AM - 1:00 AM</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <p>&copy; 2025 CA~Boutique. Todos los derechos reservados.</p>
+      <p>Diseñado con ❤️ para amantes de la moda</p>
+    </div>
+  </footer>
+
+  <script src="../js/products.js"></script>
+  <script src="../js/main.js"></script>
+  <script>
+    // ¡IMPORTANTE! En products.js la categoría se llama "cuidado", no "cuidado-personal"
+    document.addEventListener('DOMContentLoaded', () => {
+      const category = 'cuidado'; // ← ¡Usa "cuidado" aquí!
+      const container = document.getElementById('productosCategoria');
+      
+      const filteredProducts = products.filter(p => p.category === category);
+      
+      if (filteredProducts.length === 0) {
+        container.innerHTML = '<p class="no-products">Próximamente más productos de cuidado personal...</p>';
+      } else {
+        container.innerHTML = filteredProducts.map(product => `
+          <div class="product-card">
+            <img src="${product.image}" alt="${product.name}" class="product-img">
+            <div class="product-info">
+              <h3>${product.name}</h3>
+              <p class="category">Cuidado Personal</p>
+              <p class="price">$${product.price.toLocaleString('es-MX')}</p>
+            </div>
+          </div>
+        `).join('');
+      }
+    });
+  </script>
+  
+  <style>
+    .no-products {
+      text-align: center;
+      font-size: 1.5rem;
+      color: var(--accent);
+      padding: 50px;
+      grid-column: 1 / -1;
+    }
+  </style>
+</body>
+</html>
