@@ -5,7 +5,7 @@
 // ============================================
 const CONFIG = {
     // Contraseña de administración (CÁMBIALA)
-    ADMIN_PASSWORD: "ca-boutique-admin-2024",
+    ADMIN_PASSWORD: "2024",
     
     // Configuración de Cloudinary (REEMPLAZA CON TUS DATOS)
     CLOUDINARY: {
