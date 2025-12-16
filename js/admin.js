@@ -1,5 +1,6 @@
 // ============================================
 // SISTEMA ADMINISTRATIVO - CA~Boutique
+// VERSIÓN CORREGIDA PARA CUBA
 // ============================================
 
 // CONFIGURACIÓN - ¡IMPORTANTE! Cambia estos valores
@@ -15,26 +16,46 @@ let currentEditId = null;
 let deleteCallback = null;
 let allProducts = [];
 
-// ===== FUNCIONES DE AUTENTICACIÓN =====
+// ===== FUNCIONES DE AUTENTICACIÓN (CORREGIDAS) =====
 function loginAdmin() {
-    const password = document.getElementById('adminPassword').value;
+    const passwordInput = document.getElementById('adminPassword');
     const errorElement = document.getElementById('loginError');
+    
+    // Verificar si los elementos existen
+    if (!passwordInput) {
+        console.error('Error: No se encontró el elemento con id "adminPassword"');
+        if (errorElement) errorElement.textContent = 'Error: Elemento no encontrado';
+        return;
+    }
+    
+    const password = passwordInput.value;
     
     if (password === CONFIG.ADMIN_PASSWORD) {
         localStorage.setItem('adminLoggedIn', 'true');
-        document.getElementById('loginSection').style.display = 'none';
-        document.getElementById('adminPanel').style.display = 'block';
+        
+        // Ocultar login y mostrar panel
+        const loginSection = document.getElementById('loginSection');
+        const adminPanel = document.getElementById('adminPanel');
+        
+        if (loginSection) loginSection.style.display = 'none';
+        if (adminPanel) adminPanel.style.display = 'block';
         
         // Inicializar el panel
         setTimeout(() => {
-            loadProducts();
-            exportToJSON();
-            showNotification('¡Bienvenido al panel administrativo!', 'success');
+            try {
+                if (typeof loadProducts === 'function') loadProducts();
+                if (typeof exportToJSON === 'function') exportToJSON();
+                if (typeof showNotification === 'function') {
+                    showNotification('¡Bienvenido al panel administrativo!', 'success');
+                }
+            } catch (e) {
+                console.error('Error al inicializar panel:', e);
+            }
         }, 100);
         
-        errorElement.textContent = '';
+        if (errorElement) errorElement.textContent = '';
     } else {
-        errorElement.textContent = '❌ Contraseña incorrecta';
+        if (errorElement) errorElement.textContent = '❌ Contraseña incorrecta';
     }
 }
 
@@ -80,12 +101,12 @@ function saveProducts(productsArray) {
 }
 
 function saveProduct() {
-    const name = document.getElementById('productName').value.trim();
-    const price = parseFloat(document.getElementById('productPrice').value);
-    const category = document.getElementById('productCategory').value;
-    const image = document.getElementById('productImage').value.trim();
-    const description = document.getElementById('productDescription').value.trim();
-    const editId = document.getElementById('editId').value;
+    const name = document.getElementById('productName')?.value.trim();
+    const priceInput = document.getElementById('productPrice')?.value;
+    const category = document.getElementById('productCategory')?.value;
+    const image = document.getElementById('productImage')?.value.trim();
+    const description = document.getElementById('productDescription')?.value.trim();
+    const editId = document.getElementById('editId')?.value;
 
     // Validaciones
     if (!name) {
@@ -93,6 +114,7 @@ function saveProduct() {
         return;
     }
     
+    const price = parseFloat(priceInput);
     if (!price || isNaN(price) || price < 0) {
         showNotification('❌ El precio debe ser un número válido mayor a 0', 'error');
         return;
@@ -142,7 +164,7 @@ function saveProduct() {
     saveProducts(products);
     renderProductsTable(products);
     clearForm();
-    exportToJSON(); // Actualizar el código de exportación
+    if (typeof exportToJSON === 'function') exportToJSON();
 }
 
 function editProduct(id) {
@@ -161,7 +183,9 @@ function editProduct(id) {
         document.getElementById('cancelBtn').style.display = 'inline-flex';
         
         // Mostrar vista previa de la imagen
-        showImagePreview(product.image);
+        if (typeof showImagePreview === 'function') {
+            showImagePreview(product.image);
+        }
         
         // Scroll al formulario
         document.getElementById('productName').focus();
@@ -185,7 +209,7 @@ function deleteProduct(id) {
         saveProducts(updatedProducts);
         renderProductsTable(updatedProducts);
         showNotification('✅ Producto eliminado correctamente', 'success');
-        exportToJSON(); // Actualizar el código de exportación
+        if (typeof exportToJSON === 'function') exportToJSON();
     };
     
     document.getElementById('confirmModal').style.display = 'flex';
@@ -233,22 +257,19 @@ function cancelEdit() {
 
 // ===== SELECTOR DE IMÁGENES DESDE GITHUB =====
 function onCategoryChange() {
-    const category = document.getElementById('productCategory').value;
+    const category = document.getElementById('productCategory')?.value;
     const helpText = document.getElementById('imageHelpText');
     const loadBtn = document.getElementById('loadImagesBtn');
     
-    if (category) {
+    if (category && helpText && loadBtn) {
         helpText.textContent = `Categoría seleccionada: ${getCategoryName(category)}`;
         loadBtn.disabled = false;
         loadBtn.innerHTML = '<i class="fas fa-sync"></i> Cargar Imágenes de esta Categoría';
-    } else {
-        helpText.textContent = 'Selecciona una categoría primero';
-        loadBtn.disabled = true;
     }
 }
 
 async function loadImagesForCategory() {
-    const category = document.getElementById('productCategory').value;
+    const category = document.getElementById('productCategory')?.value;
     if (!category) {
         showNotification('❌ Primero selecciona una categoría', 'error');
         return;
@@ -256,6 +277,8 @@ async function loadImagesForCategory() {
     
     const container = document.getElementById('imageSelectorContainer');
     const loadBtn = document.getElementById('loadImagesBtn');
+    
+    if (!container || !loadBtn) return;
     
     // Mostrar estado de carga
     container.innerHTML = `
@@ -311,7 +334,7 @@ async function loadImagesForCategory() {
                 <p>Error al cargar imágenes</p>
                 <small>${error.message}</small>
                 <br>
-                <small>Verifica: 1) Usuario/Repo correcto, 2) Carpeta existe, 3) Sin errores 404</small>
+                <small>Verifica: 1) Usuario/Repo correcto, 2) Carpeta existe</small>
             </div>
         `;
         showNotification(`❌ ${error.message}`, 'error');
@@ -323,6 +346,7 @@ async function loadImagesForCategory() {
 
 function displayImageGrid(imageFiles, category) {
     const container = document.getElementById('imageSelectorContainer');
+    if (!container) return;
     
     container.innerHTML = `
         <div class="image-selector">
@@ -335,7 +359,7 @@ function displayImageGrid(imageFiles, category) {
                          title="${file.name} (${(file.size/1024).toFixed(1)} KB)">
                         <img src="${file.download_url || `https://raw.githubusercontent.com/${CONFIG.GITHUB_USER}/${CONFIG.GITHUB_REPO}/main/${file.path}`}" 
                              alt="${file.name}"
-                             onerror="this.onerror=null; this.src='https://via.placeholder.com/80/eee/666?text=Error';">
+                             onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2280%22 height=%2280%22 viewBox=%220 0 80 80%22><rect width=%2280%22 height=%2280%22 fill=%22%23eee%22/><text x=%2250%25%22 y=%2250%25%22 font-family=%22Arial%22 font-size=%2210%22 fill=%22%23666%22 text-anchor=%22middle%22 dy=%22.3em%22>Error</text></svg>';">
                         <div class="image-name">${file.name}</div>
                     </div>
                 `).join('')}
@@ -365,13 +389,16 @@ function showImagePreview(imagePath) {
     const previewImg = document.getElementById('imagePreview');
     const pathText = document.getElementById('imagePathText');
     
+    if (!previewBox || !previewImg || !pathText) return;
+    
     if (imagePath) {
         // Usar raw.githubusercontent para la vista previa
         const rawUrl = `https://raw.githubusercontent.com/${CONFIG.GITHUB_USER}/${CONFIG.GITHUB_REPO}/main/${imagePath}`;
         
         previewImg.src = rawUrl;
         previewImg.onerror = function() {
-            this.src = 'https://via.placeholder.com/150/eee/666?text=Imagen+no+encontrada';
+            // Usar un placeholder SVG en lugar de externo
+            this.src = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="150" height="150" viewBox="0 0 150 150"><rect width="150" height="150" fill="%23f0f0f0"/><text x="50%" y="50%" font-family="Arial" font-size="14" fill="%23999" text-anchor="middle" dy=".3em">Imagen no encontrada</text></svg>';
         };
         
         pathText.textContent = imagePath;
@@ -385,6 +412,8 @@ function showImagePreview(imagePath) {
 function renderProductsTable(productsArray) {
     const tbody = document.getElementById('productsList');
     const emptyState = document.getElementById('emptyState');
+    
+    if (!tbody || !emptyState) return;
     
     if (!productsArray || productsArray.length === 0) {
         tbody.innerHTML = '';
@@ -404,7 +433,7 @@ function renderProductsTable(productsArray) {
                 <img src="${product.image.startsWith('http') ? product.image : `https://raw.githubusercontent.com/${CONFIG.GITHUB_USER}/${CONFIG.GITHUB_REPO}/main/${product.image}`}" 
                      alt="${product.name}" 
                      class="product-img-small"
-                     onerror="this.src='https://via.placeholder.com/50/eee/666?text=IMG'">
+                     onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2250%22 height=%2250%22 viewBox=%220 0 50 50%22><rect width=%2250%22 height=%2250%22 fill=%22%23eee%22/><text x=%2250%25%22 y=%2250%25%22 font-family=%22Arial%22 font-size=%228%22 fill=%22%23666%22 text-anchor=%22middle%22 dy=%22.3em%22>IMG</text></svg>';">
             </td>
             <td>
                 <div class="product-name">${product.name}</div>
@@ -442,13 +471,13 @@ function getCategoryName(categoryKey) {
 }
 
 function filterProducts() {
-    const searchTerm = document.getElementById('searchInput').value.toLowerCase();
-    const categoryFilter = document.getElementById('categoryFilter').value;
+    const searchTerm = document.getElementById('searchInput')?.value.toLowerCase();
+    const categoryFilter = document.getElementById('categoryFilter')?.value;
     const products = getProducts();
     
     const filtered = products.filter(product => {
-        const matchesSearch = product.name.toLowerCase().includes(searchTerm) ||
-                            (product.description && product.description.toLowerCase().includes(searchTerm));
+        const matchesSearch = product.name.toLowerCase().includes(searchTerm || '') ||
+                            (product.description && product.description.toLowerCase().includes(searchTerm || ''));
         const matchesCategory = !categoryFilter || product.category === categoryFilter;
         
         return matchesSearch && matchesCategory;
@@ -465,9 +494,13 @@ function updateStats(products) {
     const totalValue = products.reduce((sum, p) => sum + (p.price || 0), 0);
     const categories = new Set(products.map(p => p.category)).size;
     
-    document.getElementById('totalProducts').textContent = totalProducts;
-    document.getElementById('totalCategories').textContent = categories;
-    document.getElementById('totalValue').textContent = totalValue.toLocaleString('es-MX');
+    const totalProductsEl = document.getElementById('totalProducts');
+    const totalCategoriesEl = document.getElementById('totalCategories');
+    const totalValueEl = document.getElementById('totalValue');
+    
+    if (totalProductsEl) totalProductsEl.textContent = totalProducts;
+    if (totalCategoriesEl) totalCategoriesEl.textContent = categories;
+    if (totalValueEl) totalValueEl.textContent = totalValue.toLocaleString('es-MX');
 }
 
 // ===== EXPORTACIÓN =====
@@ -482,7 +515,7 @@ function exportToJSON() {
         category: p.category,
         image: p.image,
         description: p.description || undefined
-    })).filter(p => p.description === undefined ? delete p.description : true); // Eliminar description si está vacío
+    })).filter(p => p.description === undefined ? delete p.description : true);
     
     const jsonString = JSON.stringify(formattedProducts, null, 2);
     
@@ -497,26 +530,40 @@ function exportToJSON() {
 
 const products = ${jsonString};`;
     
-    document.getElementById('jsonOutput').textContent = code;
-    document.getElementById('copyBtn').innerHTML = '<i class="far fa-copy"></i> Copiar Código';
-    document.getElementById('copyBtn').classList.remove('copied');
+    const jsonOutput = document.getElementById('jsonOutput');
+    const copyBtn = document.getElementById('copyBtn');
+    
+    if (jsonOutput) jsonOutput.textContent = code;
+    if (copyBtn) {
+        copyBtn.innerHTML = '<i class="far fa-copy"></i> Copiar Código';
+        copyBtn.classList.remove('copied');
+    }
     
     return code;
 }
 
 function copyCode() {
-    const code = document.getElementById('jsonOutput').textContent;
+    const code = document.getElementById('jsonOutput')?.textContent;
     const copyBtn = document.getElementById('copyBtn');
     
+    if (!code) {
+        showNotification('❌ No hay código para copiar', 'error');
+        return;
+    }
+    
     navigator.clipboard.writeText(code).then(() => {
-        copyBtn.innerHTML = '<i class="fas fa-check"></i> ¡Copiado!';
-        copyBtn.classList.add('copied');
+        if (copyBtn) {
+            copyBtn.innerHTML = '<i class="fas fa-check"></i> ¡Copiado!';
+            copyBtn.classList.add('copied');
+        }
         showNotification('✅ Código copiado al portapapeles', 'success');
         
         // Restaurar después de 3 segundos
         setTimeout(() => {
-            copyBtn.innerHTML = '<i class="far fa-copy"></i> Copiar Código';
-            copyBtn.classList.remove('copied');
+            if (copyBtn) {
+                copyBtn.innerHTML = '<i class="far fa-copy"></i> Copiar Código';
+                copyBtn.classList.remove('copied');
+            }
         }, 3000);
     }).catch(err => {
         console.error('Error al copiar:', err);
@@ -652,42 +699,28 @@ document.addEventListener('DOMContentLoaded', function() {
     `;
     document.head.appendChild(style);
     
-    // Verificar si hay productos en localStorage, si no, importar de products.js
-    if (!localStorage.getItem(CONFIG.STORAGE_KEY) && window.products && window.products.length > 0) {
-        saveProducts([...window.products]);
-    }
-    
-    // Permitir Enter en el campo de contraseña
-    const passwordInput = document.getElementById('adminPassword');
-    if (passwordInput) {
-        passwordInput.addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                loginAdmin();
-            }
-        });
+    // Verificar si ya está logueado
+    if (localStorage.getItem('adminLoggedIn') === 'true') {
+        document.getElementById('loginSection').style.display = 'none';
+        document.getElementById('adminPanel').style.display = 'block';
+        
+        // Inicializar el panel
+        setTimeout(() => {
+            loadProducts();
+            exportToJSON();
+        }, 100);
     }
     
     // Inicializar ayuda del selector de imágenes
-    onCategoryChange();
+    if (typeof onCategoryChange === 'function') {
+        onCategoryChange();
+    }
     
     // Mostrar advertencia si CONFIG no está configurado
     if (CONFIG.GITHUB_USER === 'TuUsuarioDeGitHub') {
         console.warn('⚠️ CONFIGURACIÓN REQUERIDA: Cambia CONFIG.GITHUB_USER en admin.js');
-        showNotification('⚠️ Configura tu usuario de GitHub en admin.js', 'warning');
+        if (typeof showNotification === 'function') {
+            showNotification('⚠️ Configura tu usuario de GitHub en admin.js', 'warning');
+        }
     }
 });
-
-// ===== ACCESO RÁPIDO DESDE CONSOLA (para desarrollo) =====
-if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
-    window.adminDebug = {
-        showProducts: () => console.table(getProducts()),
-        clearStorage: () => {
-            localStorage.removeItem(CONFIG.STORAGE_KEY);
-            console.log('Storage limpiado');
-            loadProducts();
-        },
-        exportData: exportToJSON,
-        importData: importFromProductsJS,
-        getConfig: () => CONFIG
-    };
-}
