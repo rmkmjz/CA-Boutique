@@ -7,25 +7,22 @@
   <link rel="stylesheet" href="../css/style.css">
   <link rel="stylesheet" href="../css/open-close.css">
   <link rel="icon" href="../img/logo.png">
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800&family=Raleway:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Raleway:wght@300;400;600&display=swap" rel="stylesheet">
 </head>
 <body>
+  <!-- Indicador de horario -->
   <div class="status-bar" id="storeStatus">
     <span class="status-dot" id="statusDot"></span>
     <span class="status-text" id="statusText">Verificando horario...</span>
   </div>
 
+  <!-- Header -->
   <header>
     <div class="container">
       <a href="../index.html" class="logo">
         <img src="../img/logo.png" alt="CA~Boutique Logo">
         <h1>CA<span class="tilde">~</span>Boutique</h1>
       </a>
-      
-      <button class="menu-toggle">
-        <i class="fas fa-bars"></i>
-      </button>
       
       <nav>
         <ul>
@@ -34,99 +31,113 @@
           <li><a href="category.html?cat=ninos">Niños</a></li>
           <li><a href="category.html?cat=accesorios">Accesorios</a></li>
           <li><a href="category.html?cat=cuidado">Cuidado Personal</a></li>
-          <li><a href="../index.html#contacto" class="highlight">Contacto</a></li>
+          <li><a href="../index.html#contacto">Contacto</a></li>
         </ul>
       </nav>
     </div>
   </header>
 
-  <section class="hero categoria-hero" id="categoriaHero">
+  <!-- Hero section -->
+  <section class="hero">
     <div class="hero-content">
       <h1 id="categoriaTitulo">Categoría</h1>
-      <p id="categoriaDescripcion">Descubre nuestra exclusiva colección</p>
+      <p id="categoriaDescripcion">Descubre nuestra colección</p>
     </div>
   </section>
 
+  <!-- Productos de la categoría -->
   <section class="productos-destacados">
     <div class="container">
-      <h2>Productos de <span id="categoriaNombre">la Categoría</span></h2>
+      <h2 id="sectionTitle">Productos</h2>
       <div class="productos-grid" id="productosCategoria">
-        <!-- Se llena dinámicamente -->
+        <!-- Se llena con JavaScript -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Contacto -->
+  <section id="contacto" class="contacto">
+    <div class="container">
+      <h2>Visítanos</h2>
+      <div class="info-contacto">
+        <div class="direccion">
+          <h3>Dirección</h3>
+          <p>Calle Elegante #123<br>Col. Moda, Ciudad de México<br>CP 12345</p>
+        </div>
+        <div class="telefono">
+          <h3>Teléfono</h3>
+          <p>+52 55 1234 5678</p>
+          <p>WhatsApp: +52 1 55 8765 4321</p>
+        </div>
+        <div class="horario">
+          <h3>Horario</h3>
+          <p>Lunes a sábado: 9:00 AM - 12:00 PM y 2:00 PM - 5:00 PM</p>
+          <p>Domingo: 9:00 AM - 1:00 AM</p>
+        </div>
       </div>
     </div>
   </section>
 
   <footer>
     <div class="container">
-      <p>&copy; <span id="currentYear">2025</span> CA~Boutique. Todos los derechos reservados.</p>
-      <p><a href="../index.html" style="color: var(--accent-light); text-decoration: none;">
-        <i class="fas fa-arrow-left"></i> Volver al inicio
-      </a></p>
+      <p>&copy; 2025 CA~Boutique. Todos los derechos reservados.</p>
+      <p><a href="../index.html" style="color: var(--primary); text-decoration: none;">← Volver al inicio</a></p>
     </div>
   </footer>
 
   <script src="../js/products.js"></script>
   <script src="../js/main.js"></script>
   <script>
+    // Código SIMPLE para mostrar productos por categoría
     document.addEventListener('DOMContentLoaded', () => {
+      // Obtener categoría de la URL
       const urlParams = new URLSearchParams(window.location.search);
       const category = urlParams.get('cat');
       
+      // Nombres amigables
       const categoryNames = {
-        'hombre': { nombre: 'Hombre', desc: 'Estilo y sofisticación masculina', color: '#2d2d2d' },
-        'mujer': { nombre: 'Mujer', desc: 'Elegancia y distinción femenina', color: '#a52a2a' },
-        'ninos': { nombre: 'Niños', desc: 'Comodidad y diversión infantil', color: '#4682b4' },
-        'accesorios': { nombre: 'Accesorios', desc: 'Detalles que marcan la diferencia', color: '#8c7b6b' },
-        'cuidado': { nombre: 'Cuidado Personal', desc: 'Belleza y bienestar', color: '#5a7d5a' }
+        'hombre': 'Hombre',
+        'mujer': 'Mujer', 
+        'ninos': 'Niños',
+        'accesorios': 'Accesorios',
+        'cuidado': 'Cuidado Personal'
       };
       
-      const categoria = categoryNames[category] || { nombre: 'Productos', desc: 'Nuestra colección', color: '#8B735B' };
+      const categoryName = categoryNames[category] || 'Productos';
       
       // Actualizar la página
-      document.title = `CA~Boutique | ${categoria.nombre}`;
-      document.getElementById('categoriaTitulo').textContent = categoria.nombre;
-      document.getElementById('categoriaDescripcion').textContent = categoria.desc;
-      document.getElementById('categoriaNombre').textContent = categoria.nombre;
+      document.title = `CA~Boutique | ${categoryName}`;
+      document.getElementById('categoriaTitulo').textContent = categoryName;
+      document.getElementById('categoriaDescripcion').textContent = `Descubre nuestra colección de ${categoryName.toLowerCase()}`;
+      document.getElementById('sectionTitle').textContent = `Productos de ${categoryName}`;
       
-      // Cambiar color del hero
-      const hero = document.getElementById('categoriaHero');
-      if (hero) {
-        hero.style.background = `linear-gradient(135deg, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.5) 100%), ${categoria.color}`;
-      }
-      
-      // Filtrar y mostrar productos
+      // Filtrar productos
       const container = document.getElementById('productosCategoria');
       const filteredProducts = products.filter(p => p.category === category);
       
       if (filteredProducts.length === 0) {
         container.innerHTML = `
-          <div style="grid-column: 1/-1; text-align: center; padding: 60px;">
-            <i class="fas fa-box-open" style="font-size: 3rem; color: var(--primary-light); margin-bottom: 20px;"></i>
-            <h3 style="color: var(--primary); margin-bottom: 15px;">Próximamente más productos</h3>
-            <p style="color: var(--secondary-light); max-width: 400px; margin: 0 auto;">
-              Estamos preparando nuevas incorporaciones para esta categoría.
-              ¡Vuelve pronto!
+          <div style="grid-column: 1 / -1; text-align: center; padding: 40px;">
+            <p style="font-size: 1.2rem; color: var(--accent);">
+              Próximamente más productos en esta categoría...
             </p>
           </div>
         `;
       } else {
-        container.innerHTML = filteredProducts.map((product, index) => `
-          <div class="product-card" style="animation-delay: ${index * 0.1}s">
-            <div class="product-img-container">
-              <img src="${product.image}" alt="${product.name}" class="product-img">
-              <div class="product-badge">Nuevo</div>
-            </div>
+        container.innerHTML = filteredProducts.map(product => `
+          <div class="product-card">
+            <img src="${product.image}" alt="${product.name}" class="product-img">
             <div class="product-info">
               <h3>${product.name}</h3>
-              <p class="category">${categoria.nombre}</p>
-              <p class="price">${product.price.toLocaleString('es-MX')}</p>
+              <p class="category">${categoryName}</p>
+              <p class="price">$${product.price.toLocaleString('es-MX')}</p>
             </div>
           </div>
         `).join('');
       }
       
-      // Actualizar año en footer
-      document.getElementById('currentYear').textContent = new Date().getFullYear();
+      // Ajustar padding para header
+      document.body.style.paddingTop = document.querySelector('header').offsetHeight + 'px';
     });
   </script>
 </body>
