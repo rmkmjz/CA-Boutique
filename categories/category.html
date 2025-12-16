@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="../css/open-close.css">
   <link rel="icon" href="../img/logo.png">
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Raleway:wght@300;400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
   <!-- Indicador de horario -->
@@ -24,6 +25,10 @@
         <h1>CA<span class="tilde">~</span>Boutique</h1>
       </a>
       
+      <button class="menu-toggle" aria-label="Abrir menú">
+        <i class="fas fa-bars"></i>
+      </button>
+      
       <nav>
         <ul>
           <li><a href="category.html?cat=hombre">Hombre</a></li>
@@ -38,7 +43,7 @@
   </header>
 
   <!-- Hero section -->
-  <section class="hero">
+  <section class="hero categoria-hero">
     <div class="hero-content">
       <h1 id="categoriaTitulo">Categoría</h1>
       <p id="categoriaDescripcion">Descubre nuestra colección</p>
@@ -61,16 +66,16 @@
       <h2>Visítanos</h2>
       <div class="info-contacto">
         <div class="direccion">
-          <h3>Dirección</h3>
+          <h3><i class="fas fa-map-marker-alt"></i> Dirección</h3>
           <p>Calle Elegante #123<br>Col. Moda, Ciudad de México<br>CP 12345</p>
         </div>
         <div class="telefono">
-          <h3>Teléfono</h3>
+          <h3><i class="fas fa-phone-alt"></i> Teléfono</h3>
           <p>+52 55 1234 5678</p>
           <p>WhatsApp: +52 1 55 8765 4321</p>
         </div>
         <div class="horario">
-          <h3>Horario</h3>
+          <h3><i class="fas fa-clock"></i> Horario</h3>
           <p>Lunes a sábado: 9:00 AM - 12:00 PM y 2:00 PM - 5:00 PM</p>
           <p>Domingo: 9:00 AM - 1:00 AM</p>
         </div>
@@ -80,15 +85,15 @@
 
   <footer>
     <div class="container">
-      <p>&copy; 2025 CA~Boutique. Todos los derechos reservados.</p>
-      <p><a href="../index.html" style="color: var(--primary); text-decoration: none;">← Volver al inicio</a></p>
+      <p>&copy; <span id="currentYear">2025</span> CA~Boutique. Todos los derechos reservados.</p>
+      <p><a href="../index.html" class="back-link"><i class="fas fa-arrow-left"></i> Volver al inicio</a></p>
     </div>
   </footer>
 
   <script src="../js/products.js"></script>
   <script src="../js/main.js"></script>
   <script>
-    // Código SIMPLE para mostrar productos por categoría
+    // Código específico para category.html
     document.addEventListener('DOMContentLoaded', () => {
       // Obtener categoría de la URL
       const urlParams = new URLSearchParams(window.location.search);
@@ -117,10 +122,10 @@
       
       if (filteredProducts.length === 0) {
         container.innerHTML = `
-          <div style="grid-column: 1 / -1; text-align: center; padding: 40px;">
-            <p style="font-size: 1.2rem; color: var(--accent);">
-              Próximamente más productos en esta categoría...
-            </p>
+          <div class="no-products">
+            <i class="fas fa-box-open"></i>
+            <h3>Próximamente más productos</h3>
+            <p>Estamos preparando nuevas incorporaciones para esta categoría.</p>
           </div>
         `;
       } else {
@@ -136,9 +141,53 @@
         `).join('');
       }
       
-      // Ajustar padding para header
-      document.body.style.paddingTop = document.querySelector('header').offsetHeight + 'px';
+      // Actualizar año en footer
+      document.getElementById('currentYear').textContent = new Date().getFullYear();
     });
   </script>
+  
+  <style>
+    .no-products {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 40px;
+      background: var(--light-gray);
+      border-radius: var(--radius);
+    }
+    
+    .no-products i {
+      font-size: 3rem;
+      color: var(--primary-light);
+      margin-bottom: 15px;
+      display: block;
+    }
+    
+    .no-products h3 {
+      color: var(--primary);
+      margin-bottom: 10px;
+      font-size: 1.3rem;
+    }
+    
+    .no-products p {
+      color: var(--secondary-light);
+      max-width: 400px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+    
+    .back-link {
+      color: var(--primary);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: var(--transition);
+    }
+    
+    .back-link:hover {
+      color: var(--accent);
+      transform: translateX(-5px);
+    }
+  </style>
 </body>
 </html>
