@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -10,26 +9,75 @@
     <link rel="icon" href="img/logo.png">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Raleway:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* Estilos temporales para la página de login */
+        .admin-login {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+        }
+        
+        .login-box {
+            background: white;
+            border-radius: 15px;
+            padding: 40px;
+            width: 100%;
+            max-width: 400px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        
+        .login-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .login-header img {
+            width: 80px;
+            margin-bottom: 15px;
+        }
+        
+        .login-form input {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+        }
+        
+        .btn-login {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+    </style>
 </head>
-<body class="admin-body">
+<body>
     <!-- Panel de Login -->
     <div class="admin-login" id="loginSection">
         <div class="login-box">
             <div class="login-header">
-                <img src="img/logo.png" alt="Logo" width="60">
+                <img src="img/logo.png" alt="Logo" onerror="this.src='https://via.placeholder.com/80'">
                 <h2>CA~Boutique Admin</h2>
                 <p>Acceso exclusivo para administradores</p>
             </div>
             <div class="login-form">
-                <div class="form-group">
-                    <label for="password">
-                        <i class="fas fa-lock"></i> Contraseña de administración
-                    </label>
-                    <input type="password" id="password" placeholder="Ingresa la contraseña">
-                    <small>La contraseña por defecto es: <code>CAadmin2024!</code></small>
-                </div>
-                <button class="btn-login" onclick="loginAdmin()">Acceder al Panel</button>
-                <p class="error-msg" id="loginError"></p>
+                <input type="password" id="adminPassword" placeholder="Contraseña de administración">
+                <button class="btn-login" onclick="loginAdmin()">
+                    <i class="fas fa-sign-in-alt"></i> Acceder al Panel
+                </button>
+                <p id="loginError" style="color:red; text-align:center; margin-top:10px;"></p>
+                <small style="display:block; margin-top:20px; color:#666; text-align:center;">
+                    Contraseña por defecto: <code>CAadmin2024!</code>
+                </small>
             </div>
         </div>
     </div>
@@ -80,7 +128,7 @@
                 </div>
             </div>
 
-            <!-- Formulario CRUD -->
+            <!-- Formulario CRUD con Selector de Imágenes -->
             <div class="admin-grid">
                 <div class="admin-form">
                     <div class="form-card">
@@ -98,7 +146,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="productCategory"><i class="fas fa-folder"></i> Categoría *</label>
-                                <select id="productCategory" required>
+                                <select id="productCategory" required onchange="onCategoryChange()">
                                     <option value="">Seleccionar...</option>
                                     <option value="hombre">Hombre</option>
                                     <option value="mujer">Mujer</option>
@@ -111,24 +159,42 @@
                             </div>
                         </div>
 
+                        <!-- SELECTOR DE IMÁGENES DESDE GITHUB -->
                         <div class="form-group">
-                            <label for="productImage"><i class="fas fa-image"></i> URL de la Imagen *</label>
-                            <div class="input-with-help">
+                            <label><i class="fas fa-images"></i> Seleccionar Imagen desde GitHub</label>
+                            <div class="image-selector-controls">
+                                <button type="button" class="btn-small" onclick="loadImagesForCategory()" id="loadImagesBtn">
+                                    <i class="fas fa-sync"></i> Cargar Imágenes de esta Categoría
+                                </button>
+                                <small id="imageHelpText">Selecciona una categoría primero</small>
+                            </div>
+                            
+                            <!-- Contenedor de miniaturas -->
+                            <div id="imageSelectorContainer" class="image-selector-container">
+                                <div class="placeholder-text">
+                                    <i class="fas fa-folder-open"></i>
+                                    <p>Las imágenes cargadas aparecerán aquí</p>
+                                </div>
+                            </div>
+                            
+                            <!-- Vista previa -->
+                            <div class="image-preview-box" id="imagePreviewBox" style="display: none;">
+                                <h5><i class="fas fa-check-circle"></i> Imagen Seleccionada</h5>
+                                <img id="imagePreview" src="" alt="Vista previa" class="preview-img">
+                                <p id="imagePathText" class="image-path"></p>
+                            </div>
+                            
+                            <!-- Campo URL (se auto-llena al seleccionar imagen) -->
+                            <div class="form-group" style="margin-top: 15px;">
+                                <label for="productImage"><i class="fas fa-link"></i> URL de la Imagen *</label>
                                 <input type="text" id="productImage" 
                                        placeholder="img/productos/hombre/camisa.jpg" 
-                                       required>
+                                       required
+                                       readonly
+                                       style="background:#f8f9fa">
                                 <small class="help-text">
-                                    <i class="fas fa-info-circle"></i> 
-                                    Ejemplo: "img/productos/mujer/vestido-rojo.jpg"
+                                    Este campo se llena automáticamente al seleccionar una imagen arriba
                                 </small>
-                            </div>
-                            <div class="image-help">
-                                <p><strong>Pasos para subir imágenes:</strong></p>
-                                <ol>
-                                    <li>Sube manualmente la imagen a GitHub en la carpeta <code>img/productos/</code></li>
-                                    <li>Copia la ruta relativa de la imagen</li>
-                                    <li>Pega aquí la ruta completa desde la raíz del sitio</li>
-                                </ol>
                             </div>
                         </div>
 
@@ -155,14 +221,16 @@
                     <!-- Sección de Exportación -->
                     <div class="export-card">
                         <h3><i class="fas fa-file-code"></i> Exportar para GitHub</h3>
-                        <p>Después de crear todos los productos, copia este código y reemplaza el contenido de <code>products.js</code>:</p>
+                        <p><strong>PASO FINAL OBLIGATORIO:</strong> Después de crear/editar productos, copia este código y reemplaza TODO el contenido de <code>js/products.js</code> en GitHub.</p>
+                        
                         <div class="code-container">
-                            <button class="btn-copy" onclick="copyCode()">
+                            <button class="btn-copy" onclick="copyCode()" id="copyBtn">
                                 <i class="far fa-copy"></i> Copiar Código
                             </button>
                             <pre id="jsonOutput"><code>// Base de datos de productos
 const products = [];</code></pre>
                         </div>
+                        
                         <div class="export-actions">
                             <button class="btn-admin" onclick="downloadJSON()">
                                 <i class="fas fa-download"></i> Descargar JSON
@@ -170,6 +238,19 @@ const products = [];</code></pre>
                             <button class="btn-admin" onclick="previewProducts()">
                                 <i class="fas fa-eye"></i> Vista Previa
                             </button>
+                        </div>
+                        
+                        <div class="instructions">
+                            <h4><i class="fas fa-list-ol"></i> Instrucciones paso a paso:</h4>
+                            <ol>
+                                <li>Sube las imágenes manualmente a GitHub en la carpeta correspondiente</li>
+                                <li>Usa este panel para crear los productos vinculándolos a las imágenes</li>
+                                <li>Haz clic en <strong>"Exportar para GitHub"</strong> arriba</li>
+                                <li>Copia el código generado (botón "Copiar Código")</li>
+                                <li>Ve a tu repositorio → archivo <code>js/products.js</code></li>
+                                <li>Pega el código reemplazando TODO el contenido</li>
+                                <li>Haz "Commit changes"</li>
+                            </ol>
                         </div>
                     </div>
                 </div>
@@ -198,8 +279,8 @@ const products = [];</code></pre>
                             </div>
                         </div>
 
-                        <div class="products-table" id="productsTable">
-                            <table>
+                        <div class="products-table-container">
+                            <table class="products-table">
                                 <thead>
                                     <tr>
                                         <th>ID</th>
@@ -238,18 +319,11 @@ const products = [];</code></pre>
             </div>
         </div>
 
-        <!-- Footer del Admin -->
+        <!-- Footer -->
         <footer class="admin-footer">
             <div class="container">
-                <p><strong>Instrucciones para GitHub:</strong></p>
-                <ol>
-                    <li>Crea los productos en este panel</li>
-                    <li>Sube las imágenes manualmente a la carpeta <code>img/productos/</code> en GitHub</li>
-                    <li>Exporta el código JSON</li>
-                    <li>Copia y pega en <code>js/products.js</code> reemplazando el array existente</li>
-                    <li>Haz commit y push a GitHub</li>
-                </ol>
-                <p class="small-text">Sistema desarrollado para CA~Boutique - © 2024</p>
+                <p><strong>⚠️ IMPORTANTE:</strong> Los cambios NO se guardan automáticamente en GitHub. Debes exportar el código y actualizar manualmente el archivo <code>js/products.js</code>.</p>
+                <p class="small-text">Sistema desarrollado para CA~Boutique - © 2024 | Funciona con GitHub Pages</p>
             </div>
         </footer>
     </div>
@@ -259,15 +333,27 @@ const products = [];</code></pre>
     <script src="js/admin.js"></script>
     
     <script>
-        // Contraseña de administración (puedes cambiarla)
-        const ADMIN_PASSWORD = "CAadmin2024!";
+        // Configuración inicial
+        const ADMIN_PASSWORD = "CAadmin2024!"; // Cambia esta contraseña
         
         // Verificar si ya está logueado
         if (localStorage.getItem('adminLoggedIn') === 'true') {
             document.getElementById('loginSection').style.display = 'none';
             document.getElementById('adminPanel').style.display = 'block';
-            loadProducts();
+            
+            // Inicializar el panel
+            setTimeout(() => {
+                if (typeof loadProducts === 'function') loadProducts();
+                if (typeof exportToJSON === 'function') exportToJSON();
+            }, 100);
         }
+        
+        // Permitir Enter en el campo de contraseña
+        document.getElementById('adminPassword')?.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                loginAdmin();
+            }
+        });
     </script>
 </body>
-              </html>
+                                </html>
