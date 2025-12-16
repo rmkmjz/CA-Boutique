@@ -3,379 +3,197 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Panel - CA~Boutique</title>
-    <link rel="stylesheet" href="admin.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Raleway:wght@300;400;600&display=swap" rel="stylesheet">
+    <title>Dashboard CA~Boutique</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 20px;
+        }
+        .login-container {
+            max-width: 400px;
+            margin: 100px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .dashboard {
+            display: none;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input, textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        button {
+            background-color: #c9a77c;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .image-preview {
+            max-width: 200px;
+            margin-top: 10px;
+        }
+        .status {
+            padding: 10px;
+            margin-top: 10px;
+            border-radius: 5px;
+        }
+        .success {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        .error {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+    </style>
 </head>
 <body>
-    <!-- Overlay de carga -->
-    <div class="loading-overlay" id="loadingOverlay">
-        <div class="spinner"></div>
-        <p>Procesando...</p>
-    </div>
-
-    <!-- Panel de Login -->
-    <div class="login-panel" id="loginPanel">
-        <div class="login-container">
-            <div class="login-header">
-                <div class="logo">
-                    <i class="fas fa-crown"></i>
-                    <h1>CA<span class="tilde">~</span>Admin</h1>
-                </div>
-                <p class="subtitle">Panel de Administración</p>
-            </div>
-
-            <div class="login-form">
-                <div class="form-group">
-                    <label for="adminPassword">
-                        <i class="fas fa-key"></i> Contraseña de Administración
-                    </label>
-                    <input type="password" id="adminPassword" 
-                           placeholder="Ingresa la clave de acceso" 
-                           autocomplete="off">
-                    <div class="password-strength">
-                        <div class="strength-bar"></div>
-                    </div>
-                </div>
-
-                <div class="form-options">
-                    <label class="checkbox">
-                        <input type="checkbox" id="rememberMe">
-                        <span>Recordar sesión (24 horas)</span>
-                    </label>
-                </div>
-
-                <button class="login-btn" id="loginBtn">
-                    <i class="fas fa-sign-in-alt"></i> Acceder al Dashboard
-                </button>
-
-                <div class="login-error" id="loginError">
-                    <i class="fas fa-exclamation-circle"></i>
-                    <span>Clave incorrecta. Intenta de nuevo.</span>
-                </div>
-
-                <div class="security-note">
-                    <i class="fas fa-shield-alt"></i>
-                    <p>Acceso restringido al personal autorizado. Todas las actividades quedan registradas.</p>
-                </div>
-            </div>
-
-            <div class="login-footer">
-                <p><i class="fas fa-info-circle"></i> Contacta al desarrollador si olvidaste la clave</p>
-                <p class="version">v1.0 • Último acceso: <span id="lastAccess">Nunca</span></p>
-            </div>
+    <!-- Pantalla de login -->
+    <div class="login-container" id="loginScreen">
+        <h2>Dashboard CA~Boutique</h2>
+        <div class="form-group">
+            <label for="password">Contraseña de administrador</label>
+            <input type="password" id="password" placeholder="Ingresa la contraseña">
         </div>
+        <button onclick="login()">Iniciar sesión</button>
+        <p id="loginError" style="color: red; display: none;">Contraseña incorrecta</p>
     </div>
 
-    <!-- Dashboard Principal (oculto inicialmente) -->
-    <div class="dashboard" id="dashboardPanel">
-        <!-- Header del Dashboard -->
-        <header class="dashboard-header">
-            <div class="header-left">
-                <div class="logo">
-                    <i class="fas fa-crown"></i>
-                    <h1>CA<span class="tilde">~</span>Dashboard</h1>
-                </div>
-                <nav class="dashboard-nav">
-                    <a href="#" class="nav-link active" data-section="overview">
-                        <i class="fas fa-tachometer-alt"></i> Resumen
-                    </a>
-                    <a href="#" class="nav-link" data-section="products">
-                        <i class="fas fa-tshirt"></i> Productos
-                    </a>
-                    <a href="#" class="nav-link" data-section="images">
-                        <i class="fas fa-images"></i> Imágenes
-                    </a>
-                    <a href="#" class="nav-link" data-section="analytics">
-                        <i class="fas fa-chart-bar"></i> Estadísticas
-                    </a>
-                </nav>
-            </div>
-
-            <div class="header-right">
-                <div class="user-info">
-                    <div class="user-avatar">
-                        <i class="fas fa-user-circle"></i>
-                    </div>
-                    <div class="user-details">
-                        <span class="user-name" id="userName">Administrador</span>
-                        <span class="user-role">Propietario</span>
-                    </div>
-                </div>
-                <button class="logout-btn" id="logoutBtn">
-                    <i class="fas fa-sign-out-alt"></i> Salir
-                </button>
-            </div>
-        </header>
-
-        <!-- Contenido Principal -->
-        <main class="dashboard-content">
-            <!-- Sección: Resumen -->
-            <section class="content-section active" id="overviewSection">
-                <div class="section-header">
-                    <h2><i class="fas fa-tachometer-alt"></i> Resumen del Sistema</h2>
-                    <p>Vista general de tu tienda CA~Boutique</p>
-                </div>
-
-                <!-- Tarjetas de Estadísticas -->
-                <div class="stats-cards">
-                    <div class="stat-card">
-                        <div class="stat-icon" style="background: #4CAF50;">
-                            <i class="fas fa-tshirt"></i>
-                        </div>
-                        <div class="stat-info">
-                            <h3 id="totalProducts">12</h3>
-                            <p>Productos Totales</p>
-                            <span class="stat-trend">+2 esta semana</span>
-                        </div>
-                    </div>
-
-                    <div class="stat-card">
-                        <div class="stat-icon" style="background: #2196F3;">
-                            <i class="fas fa-image"></i>
-                        </div>
-                        <div class="stat-info">
-                            <h3 id="totalImages">12</h3>
-                            <p>Imágenes Subidas</p>
-                            <span class="stat-trend">En Cloudinary</span>
-                        </div>
-                    </div>
-
-                    <div class="stat-card">
-                        <div class="stat-icon" style="background: #FF9800;">
-                            <i class="fas fa-eye"></i>
-                        </div>
-                        <div class="stat-info">
-                            <h3 id="siteVisits">0</h3>
-                            <p>Visitas Hoy</p>
-                            <span class="stat-trend">En tiempo real</span>
-                        </div>
-                    </div>
-
-                    <div class="stat-card">
-                        <div class="stat-icon" style="background: #9C27B0;">
-                            <i class="fas fa-calendar-alt"></i>
-                        </div>
-                        <div class="stat-info">
-                            <h3 id="lastUpdate">Hoy</h3>
-                            <p>Última Actualización</p>
-                            <span class="stat-trend">Siempre actualizado</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Acciones Rápidas -->
-                <div class="quick-actions">
-                    <h3><i class="fas fa-bolt"></i> Acciones Rápidas</h3>
-                    <div class="actions-grid">
-                        <button class="action-btn" id="refreshProductsBtn">
-                            <i class="fas fa-sync-alt"></i>
-                            <span>Actualizar Productos</span>
-                        </button>
-                        <button class="action-btn" id="uploadImageBtn">
-                            <i class="fas fa-cloud-upload-alt"></i>
-                            <span>Subir Imagen Nueva</span>
-                        </button>
-                        <button class="action-btn" id="viewSiteBtn">
-                            <i class="fas fa-external-link-alt"></i>
-                            <span>Ver Sitio Web</span>
-                        </button>
-                        <button class="action-btn" id="backupBtn">
-                            <i class="fas fa-download"></i>
-                            <span>Descargar Backup</span>
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Estado del Sistema -->
-                <div class="system-status">
-                    <h3><i class="fas fa-server"></i> Estado del Sistema</h3>
-                    <div class="status-grid">
-                        <div class="status-item online">
-                            <i class="fas fa-check-circle"></i>
-                            <span>GitHub Pages</span>
-                            <small>Operativo</small>
-                        </div>
-                        <div class="status-item online">
-                            <i class="fas fa-check-circle"></i>
-                            <span>Cloudinary</span>
-                            <small>Conectado</small>
-                        </div>
-                        <div class="status-item warning">
-                            <i class="fas fa-exclamation-triangle"></i>
-                            <span>Base de Datos</span>
-                            <small>Manual</small>
-                        </div>
-                        <div class="status-item online">
-                            <i class="fas fa-check-circle"></i>
-                            <span>Dashboard</span>
-                            <small>Activo</small>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Sección: Productos -->
-            <section class="content-section" id="productsSection">
-                <div class="section-header">
-                    <h2><i class="fas fa-tshirt"></i> Gestión de Productos</h2>
-                    <p>Administra los productos de tu tienda</p>
-                </div>
-
-                <div class="products-container">
-                    <div class="products-actions">
-                        <button class="btn-primary" id="addProductBtn">
-                            <i class="fas fa-plus"></i> Agregar Producto
-                        </button>
-                        <button class="btn-secondary" id="importProductsBtn">
-                            <i class="fas fa-file-import"></i> Importar desde JSON
-                        </button>
-                    </div>
-
-                    <div class="products-list" id="productsList">
-                        <!-- Los productos se cargarán aquí -->
-                        <div class="loading-products">
-                            <i class="fas fa-spinner fa-spin"></i>
-                            <p>Cargando productos...</p>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Sección: Imágenes -->
-            <section class="content-section" id="imagesSection">
-                <div class="section-header">
-                    <h2><i class="fas fa-images"></i> Gestión de Imágenes</h2>
-                    <p>Sube y administra imágenes en Cloudinary</p>
-                </div>
-
-                <!-- Subida de Imágenes -->
-                <div class="upload-container">
-                    <div class="upload-header">
-                        <h3><i class="fas fa-cloud-upload-alt"></i> Subir a Cloudinary</h3>
-                        <div class="upload-info">
-                            <span class="storage-info">
-                                <i class="fas fa-database"></i> 25 GB disponibles
-                            </span>
-                        </div>
-                    </div>
-
-                    <div class="upload-area" id="dropArea">
-                        <i class="fas fa-cloud-upload-alt"></i>
-                        <h4>Arrastra y suelta imágenes aquí</h4>
-                        <p>o haz clic para seleccionar archivos</p>
-                        <input type="file" id="fileInput" accept="image/*" multiple style="display: none;">
-                        <button class="btn-upload" id="selectFilesBtn">
-                            <i class="fas fa-folder-open"></i> Seleccionar Archivos
-                        </button>
-                        <div class="upload-requirements">
-                            <p><i class="fas fa-info-circle"></i> Formatos: JPG, PNG, GIF • Máx. 5MB por imagen</p>
-                        </div>
-                    </div>
-
-                    <div class="upload-progress" id="uploadProgress" style="display: none;">
-                        <div class="progress-info">
-                            <span id="progressText">Subiendo imágenes...</span>
-                            <span id="progressPercent">0%</span>
-                        </div>
-                        <div class="progress-bar">
-                            <div class="progress-fill" id="progressFill"></div>
-                        </div>
-                    </div>
-
-                    <div class="uploaded-images" id="uploadedImages">
-                        <h4><i class="fas fa-history"></i> Imágenes Subidas Recientemente</h4>
-                        <div class="images-grid" id="imagesGrid">
-                            <!-- Imágenes subidas aparecerán aquí -->
-                            <div class="no-images">
-                                <i class="fas fa-image"></i>
-                                <p>No hay imágenes subidas aún</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Sección: Estadísticas -->
-            <section class="content-section" id="analyticsSection">
-                <div class="section-header">
-                    <h2><i class="fas fa-chart-bar"></i> Estadísticas</h2>
-                    <p>Métricas y análisis de tu tienda</p>
-                </div>
-
-                <div class="analytics-grid">
-                    <div class="analytics-card">
-                        <h3><i class="fas fa-users"></i> Tráfico del Sitio</h3>
-                        <div class="chart-placeholder">
-                            <canvas id="trafficChart"></canvas>
-                        </div>
-                    </div>
-
-                    <div class="analytics-card">
-                        <h3><i class="fas fa-shopping-cart"></i> Productos por Categoría</h3>
-                        <div class="chart-placeholder">
-                            <canvas id="categoryChart"></canvas>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="recent-activity">
-                    <h3><i class="fas fa-history"></i> Actividad Reciente</h3>
-                    <div class="activity-list" id="activityList">
-                        <div class="activity-item">
-                            <i class="fas fa-user-circle"></i>
-                            <div class="activity-content">
-                                <p><strong>Administrador</strong> inició sesión</p>
-                                <small>Hace 5 minutos</small>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-        </main>
-
-        <!-- Footer del Dashboard -->
-        <footer class="dashboard-footer">
-            <div class="footer-content">
-                <p>CA~Boutique Admin Panel v1.0 • <span id="currentYear">2024</span></p>
-                <p><i class="fas fa-shield-alt"></i> Sesión activa • Última actualización: <span id="lastUpdateTime">Justo ahora</span></p>
-            </div>
-        </footer>
-    </div>
-
-    <!-- Modal para URLs de imágenes -->
-    <div class="modal-overlay" id="urlModal">
-        <div class="modal">
-            <div class="modal-header">
-                <h3><i class="fas fa-link"></i> URL de la Imagen</h3>
-                <button class="modal-close" id="closeModal">&times;</button>
-            </div>
-            <div class="modal-body">
-                <p>¡Imagen subida exitosamente! Copia la siguiente URL:</p>
-                <div class="url-container">
-                    <input type="text" id="imageUrl" readonly>
-                    <button class="btn-copy" id="copyUrlBtn">
-                        <i class="fas fa-copy"></i> Copiar
-                    </button>
-                </div>
-                <div class="url-preview">
-                    <img id="modalPreview" src="" alt="Vista previa">
-                </div>
-                <div class="modal-actions">
-                    <button class="btn-primary" id="useUrlBtn">
-                        <i class="fas fa-check"></i> Usar esta URL
-                    </button>
-                    <button class="btn-secondary" id="closeUrlBtn">
-                        <i class="fas fa-times"></i> Cerrar
-                    </button>
-                </div>
-            </div>
+    <!-- Dashboard -->
+    <div class="dashboard" id="dashboard">
+        <h1>Gestión de Productos</h1>
+        <button onclick="logout()" style="float: right;">Cerrar sesión</button>
+        
+        <div class="form-group">
+            <label for="productName">Nombre del producto</label>
+            <input type="text" id="productName">
         </div>
+        
+        <div class="form-group">
+            <label for="productImage">Imagen del producto (URL)</label>
+            <input type="text" id="productImage">
+            <small>Sube tu imagen en imgbb.com y pega la URL aquí</small>
+        </div>
+        
+        <div class="form-group">
+            <label for="productPrice">Precio (MXN)</label>
+            <input type="number" id="productPrice" step="0.01">
+        </div>
+        
+        <div class="form-group">
+            <label for="productCategory">Categoría</label>
+            <select id="productCategory">
+                <option value="hombre">Hombre</option>
+                <option value="mujer">Mujer</option>
+                <option value="ninos">Niños</option>
+                <option value="accesorios">Accesorios</option>
+                <option value="cuidado">Cuidado Personal</option>
+                <option value="zapatos">Zapatos</option>
+                <option value="joyeria">Joyería</option>
+            </select>
+        </div>
+        
+        <div class="form-group">
+            <label for="productDescription">Descripción</label>
+            <textarea id="productDescription" rows="3"></textarea>
+        </div>
+        
+        <button onclick="addProduct()">Agregar Producto</button>
+        
+        <div id="statusMessage" class="status" style="display: none;"></div>
+        
+        <h2>Productos Actuales</h2>
+        <div id="productList"></div>
     </div>
 
-    <script src="admin.js"></script>
-    <!-- Chart.js para gráficos -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // Contraseña (cámbiala en producción)
+        const ADMIN_PASSWORD = "2024";
+        
+        function login() {
+            const password = document.getElementById('password').value;
+            if (password === ADMIN_PASSWORD) {
+                document.getElementById('loginScreen').style.display = 'none';
+                document.getElementById('dashboard').style.display = 'block';
+                loadProducts();
+            } else {
+                document.getElementById('loginError').style.display = 'block';
+            }
+        }
+        
+        function logout() {
+            document.getElementById('dashboard').style.display = 'none';
+            document.getElementById('loginScreen').style.display = 'block';
+        }
+        
+        function loadProducts() {
+            // En una implementación real, cargarías esto desde products.js
+            // Por ahora, simulamos con datos de ejemplo
+            const productList = document.getElementById('productList');
+            productList.innerHTML = '<p>Carga el archivo products.js para ver los productos actuales</p>';
+        }
+        
+        function addProduct() {
+            const productName = document.getElementById('productName').value;
+            const productImage = document.getElementById('productImage').value;
+            const productPrice = document.getElementById('productPrice').value;
+            const productCategory = document.getElementById('productCategory').value;
+            const productDescription = document.getElementById('productDescription').value;
+            
+            if (!productName || !productImage || !productPrice) {
+                showStatus('Por favor completa todos los campos requeridos', 'error');
+                return;
+            }
+            
+            // Aquí generarías el código JavaScript para el nuevo producto
+            const newProductCode = `
+  {
+    id: ${Date.now()},
+    name: "${productName}",
+    image: "${productImage}",
+    category: "${productCategory}",
+    price: ${productPrice},
+    description: "${productDescription || 'Producto de alta calidad'}",
+    available: true
+  }`;
+            
+            showStatus('Producto listo para agregar. Copia este código y agrégalo al archivo products.js:', 'success');
+            document.getElementById('statusMessage').innerHTML += `<br><textarea rows="6" style="width: 100%; margin-top: 10px;">${newProductCode}</textarea>`;
+        }
+        
+        function showStatus(message, type) {
+            const status = document.getElementById('statusMessage');
+            status.textContent = message;
+            status.className = `status ${type}`;
+            status.style.display = 'block';
+            
+            setTimeout(() => {
+                status.style.display = 'none';
+            }, 5000);
+        }
+        
+        // Iniciar con pantalla de login
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('dashboard').style.display = 'none';
+        });
+    </script>
 </body>
 </html>
