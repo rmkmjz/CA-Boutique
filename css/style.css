@@ -1,11 +1,12 @@
 :root {
-  --primary: #c9a77c; /* Dorado elegante */
-  --secondary: #2d2d2d; /* Negro suave */
-  --accent: #8c7b6b; /* Beige oscuro */
-  --light: #f8f5f0; /* Crema */
-  --dark: #1a1a1a; /* Negro profundo */
+  --primary: #c9a77c;
+  --secondary: #2d2d2d;
+  --accent: #8c7b6b;
+  --light: #f8f5f0;
+  --dark: #1a1a1a;
   --shadow: 0 4px 12px rgba(0,0,0,0.1);
   --radius: 8px;
+  --transition: all 0.3s ease;
 }
 
 * {
@@ -23,68 +24,75 @@ body {
 }
 
 .container {
-  width: 90%;
-  max-width: 1200px;
+  width: 92%;
+  max-width: 1100px;
   margin: 0 auto;
   padding: 0 15px;
 }
 
-/* Header y navegación */
+/* ===== HEADER COMPACTO ===== */
 header {
-  background-color: rgba(255, 255, 255, 0.95);
+  background-color: rgba(255, 255, 255, 0.98);
   box-shadow: var(--shadow);
   position: fixed;
   width: 100%;
   top: 0;
   z-index: 1000;
-  padding: 15px 0;
+  padding: 12px 0;
+  transition: var(--transition);
+}
+
+header .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .logo {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
   text-decoration: none;
 }
 
 .logo img {
-  width: 50px;
-  height: 50px;
+  width: 45px;
+  height: 45px;
   object-fit: contain;
 }
 
 .logo h1 {
   font-family: 'Playfair Display', serif;
-  font-size: 1.8rem;
+  font-size: 1.5rem;
   color: var(--secondary);
   font-weight: 700;
 }
 
 .tilde {
   color: var(--primary);
-  font-size: 1.5em;
+  font-size: 1.3em;
   position: relative;
-  top: -5px;
+  top: -3px;
 }
 
+/* Menú compacto */
 nav ul {
   display: flex;
   list-style: none;
-  gap: 25px;
+  gap: 20px;
 }
 
 nav a {
   text-decoration: none;
   color: var(--secondary);
   font-weight: 600;
-  font-size: 1.05rem;
-  transition: color 0.3s;
+  font-size: 0.95rem;
+  transition: var(--transition);
   position: relative;
-  padding: 5px 0;
+  padding: 4px 0;
 }
 
-nav a:hover, 
-nav a:hover::after {
+nav a:hover {
   color: var(--primary);
 }
 
@@ -103,82 +111,86 @@ nav a:hover::after {
   width: 100%;
 }
 
-/* Hero section */
+/* ===== HERO OPTIMIZADO ===== */
 .hero {
-  height: 100vh;
-  background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('../img/hero-bg.jpg') no-repeat center center/cover;
+  height: 65vh;
+  min-height: 450px;
+  max-height: 600px;
+  background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.4)), url('../img/hero-bg.jpg') no-repeat center center/cover;
   display: flex;
   align-items: center;
   text-align: center;
   color: white;
-  margin-top: 70px;
+  margin-top: 65px;
+  padding: 40px 0;
 }
 
 .hero-content {
-  max-width: 800px;
+  max-width: 700px;
   margin: 0 auto;
   padding: 20px;
 }
 
 .hero h1 {
   font-family: 'Playfair Display', serif;
-  font-size: 4rem;
-  margin-bottom: 20px;
+  font-size: 2.8rem;
+  margin-bottom: 15px;
   text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+  line-height: 1.2;
 }
 
 .hero p {
-  font-size: 1.5rem;
-  margin-bottom: 30px;
+  font-size: 1.1rem;
+  margin-bottom: 25px;
   text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+  opacity: 0.9;
 }
 
 .horario-destacado {
   background: rgba(201, 167, 124, 0.9);
-  backdrop-filter: blur(10px);
   border-radius: var(--radius);
-  padding: 25px;
-  margin-top: 30px;
-  max-width: 600px;
+  padding: 20px;
+  margin-top: 25px;
+  max-width: 500px;
   margin-left: auto;
   margin-right: auto;
 }
 
 .horario-destacado h2 {
   font-family: 'Playfair Display', serif;
-  font-size: 2rem;
-  margin-bottom: 15px;
+  font-size: 1.5rem;
+  margin-bottom: 12px;
   color: white;
 }
 
 .horario-destacado p {
-  font-size: 1.2rem;
+  font-size: 1rem;
   color: white;
-  margin: 8px 0;
+  margin: 6px 0;
+  opacity: 0.95;
 }
 
-/* Banner promocional */
+/* ===== BANNER COMPACTO ===== */
 .banner {
-  background-color: var(--primary);
+  background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
   color: white;
   text-align: center;
   padding: 15px;
   font-weight: 600;
-  font-size: 1.2rem;
-  margin: 30px 0;
-  box-shadow: var(--shadow);
+  font-size: 1.1rem;
+  margin: 25px 0;
 }
 
-/* Catálogo de categorías */
+/* ===== CATEGORÍAS COMPACTAS ===== */
 .catalogo {
-  padding: 80px 0;
+  padding: 60px 0;
 }
 
 .catalogo h2 {
   text-align: center;
   font-family: 'Playfair Display', serif;
-  font-size: 2.5rem;
-  margin-bottom: 50px;
+  font-size: 2rem;
+  margin-bottom: 35px;
   color: var(--secondary);
   position: relative;
 }
@@ -186,78 +198,94 @@ nav a:hover::after {
 .catalogo h2::after {
   content: '';
   position: absolute;
-  bottom: -15px;
+  bottom: -12px;
   left: 50%;
   transform: translateX(-50%);
-  width: 80px;
-  height: 3px;
-  background-color: var(--primary);
+  width: 60px;
+  height: 2px;
+  background: var(--primary);
 }
 
 .categorias-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 30px;
-  margin-top: 30px;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+  margin-top: 25px;
 }
 
 .categoria-card {
   background: white;
   border-radius: var(--radius);
   overflow: hidden;
-  box-shadow: var(--shadow);
   text-decoration: none;
   display: block;
-  transition: transform 0.3s;
+  transition: var(--transition);
   position: relative;
-  height: 300px;
+  height: 250px;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  padding: 25px;
+  padding: 20px;
   color: white;
   text-align: center;
+  box-shadow: var(--shadow);
 }
 
 .categoria-card:hover {
-  transform: translateY(-10px);
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.12);
 }
 
 .categoria-card h3 {
   font-family: 'Playfair Display', serif;
-  font-size: 1.8rem;
-  margin-bottom: 10px;
+  font-size: 1.5rem;
+  margin-bottom: 8px;
   z-index: 2;
+  position: relative;
 }
 
 .categoria-card p {
-  font-size: 1.1rem;
+  font-size: 0.9rem;
   z-index: 2;
+  position: relative;
+  opacity: 0.9;
 }
 
-.hombre { background: linear-gradient(rgba(45, 45, 45, 0.85), rgba(45, 45, 45, 0.85)), url('../img/categorias/hombre.jpg') center/cover; }
-.mujer { background: linear-gradient(rgba(165, 42, 42, 0.85), rgba(165, 42, 42, 0.85)), url('../img/categorias/mujer.jpg') center/cover; }
-.ninos { background: linear-gradient(rgba(70, 130, 180, 0.85), rgba(70, 130, 180, 0.85)), url('../img/categorias/ninos.jpg') center/cover; }
-.accesorios { background: linear-gradient(rgba(140, 123, 107, 0.85), rgba(140, 123, 107, 0.85)), url('../img/categorias/accesorios.jpg') center/cover; }
+.categoria-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.8), rgba(0,0,0,0.3));
+  z-index: 1;
+}
 
-/* Productos destacados */
+/* Fondos de categorías */
+.hombre { background: url('../img/categorias/hombre.jpg') center/cover; }
+.mujer { background: url('../img/categorias/mujer.jpg') center/cover; }
+.ninos { background: url('../img/categorias/ninos.jpg') center/cover; }
+.accesorios { background: url('../img/categorias/accesorios.jpg') center/cover; }
+
+/* ===== PRODUCTOS OPTIMIZADOS ===== */
 .productos-destacados {
-  padding: 80px 0;
+  padding: 60px 0;
   background-color: white;
 }
 
 .productos-destacados h2 {
   text-align: center;
   font-family: 'Playfair Display', serif;
-  font-size: 2.5rem;
-  margin-bottom: 50px;
+  font-size: 2rem;
+  margin-bottom: 35px;
   color: var(--secondary);
 }
 
 .productos-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: 30px;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 25px;
 }
 
 .product-card {
@@ -265,122 +293,337 @@ nav a:hover::after {
   border-radius: var(--radius);
   overflow: hidden;
   box-shadow: var(--shadow);
-  transition: transform 0.3s;
+  transition: var(--transition);
 }
 
 .product-card:hover {
-  transform: translateY(-8px);
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.12);
 }
 
 .product-img {
   width: 100%;
-  height: 250px;
+  height: 200px;
   object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.product-card:hover .product-img {
+  transform: scale(1.05);
 }
 
 .product-info {
-  padding: 20px;
+  padding: 15px;
 }
 
 .product-info h3 {
   font-family: 'Playfair Display', serif;
-  font-size: 1.4rem;
-  margin-bottom: 8px;
+  font-size: 1.1rem;
+  margin-bottom: 6px;
   color: var(--secondary);
+  line-height: 1.4;
 }
 
 .product-info p.category {
   color: var(--accent);
   font-weight: 600;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 .product-info p.price {
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   color: var(--primary);
   font-weight: 700;
 }
 
-/* Contacto */
+.product-info p.price::after {
+  content: 'MXN';
+  font-size: 0.7rem;
+  color: var(--accent);
+  margin-left: 4px;
+  font-weight: 400;
+}
+
+/* ===== CONTACTO OPTIMIZADO ===== */
 .contacto {
-  background-color: var(--secondary);
+  background: linear-gradient(135deg, var(--secondary) 0%, var(--dark) 100%);
   color: white;
-  padding: 80px 0;
-  margin-top: 50px;
+  padding: 60px 0;
+  margin-top: 40px;
 }
 
 .contacto h2 {
   text-align: center;
   font-family: 'Playfair Display', serif;
-  font-size: 2.5rem;
-  margin-bottom: 50px;
+  font-size: 2rem;
+  margin-bottom: 35px;
+  color: white;
 }
 
 .info-contacto {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 40px;
-  margin-top: 30px;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 25px;
+  margin-top: 25px;
+}
+
+.info-contacto > div {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: var(--radius);
+  padding: 20px;
+  transition: var(--transition);
+}
+
+.info-contacto > div:hover {
+  background: rgba(255, 255, 255, 0.08);
 }
 
 .info-contacto h3 {
   font-family: 'Playfair Display', serif;
-  font-size: 1.8rem;
-  margin-bottom: 15px;
+  font-size: 1.3rem;
+  margin-bottom: 12px;
   color: var(--primary);
+  position: relative;
+  padding-bottom: 8px;
+}
+
+.info-contacto h3::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 35px;
+  height: 2px;
+  background: var(--primary);
 }
 
 .info-contacto p {
-  font-size: 1.1rem;
-  line-height: 1.8;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  opacity: 0.9;
 }
 
-/* Footer */
+/* ===== FOOTER COMPACTO ===== */
 footer {
   background-color: var(--dark);
   color: white;
   text-align: center;
-  padding: 30px 0;
-  margin-top: 50px;
+  padding: 30px 0 25px;
+  margin-top: 40px;
 }
 
 footer p {
-  font-size: 1.1rem;
-  margin: 5px 0;
+  font-size: 0.9rem;
+  margin: 4px 0;
+  opacity: 0.8;
 }
 
-/* Responsive */
+/* ===== CATEGORÍA PAGE (category.html) ESPECÍFICO ===== */
+.categoria-hero {
+  height: 50vh;
+  min-height: 350px;
+  max-height: 500px;
+}
+
+/* ===== RESPONSIVE ADJUSTMENTS ===== */
 @media (max-width: 768px) {
-  .hero h1 {
-    font-size: 2.5rem;
+  .container {
+    width: 95%;
+    padding: 0 10px;
   }
   
-  .hero p {
-    font-size: 1.2rem;
+  header {
+    padding: 10px 0;
+  }
+  
+  .logo h1 {
+    font-size: 1.3rem;
+  }
+  
+  .logo img {
+    width: 40px;
+    height: 40px;
   }
   
   nav ul {
-    flex-direction: column;
-    gap: 10px;
-    margin-top: 15px;
+    gap: 12px;
+  }
+  
+  nav a {
+    font-size: 0.85rem;
+  }
+  
+  .hero {
+    height: 55vh;
+    min-height: 400px;
+    margin-top: 60px;
+    padding: 30px 0;
+  }
+  
+  .hero h1 {
+    font-size: 2.2rem;
+    margin-bottom: 12px;
+  }
+  
+  .hero p {
+    font-size: 1rem;
+    margin-bottom: 20px;
   }
   
   .horario-destacado {
+    padding: 18px;
     margin-top: 20px;
-    padding: 15px;
+  }
+  
+  .horario-destacado h2 {
+    font-size: 1.3rem;
+    margin-bottom: 10px;
+  }
+  
+  .horario-destacado p {
+    font-size: 0.95rem;
+    margin: 5px 0;
+  }
+  
+  .catalogo,
+  .productos-destacados,
+  .contacto {
+    padding: 50px 0;
+  }
+  
+  .catalogo h2,
+  .productos-destacados h2,
+  .contacto h2 {
+    font-size: 1.8rem;
+    margin-bottom: 30px;
   }
   
   .categorias-grid {
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 15px;
+  }
+  
+  .categoria-card {
+    height: 200px;
+    padding: 15px;
+  }
+  
+  .categoria-card h3 {
+    font-size: 1.3rem;
+  }
+  
+  .categoria-card p {
+    font-size: 0.85rem;
+  }
+  
+  .productos-grid {
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 20px;
+  }
+  
+  .product-img {
+    height: 180px;
+  }
+  
+  .product-info h3 {
+    font-size: 1rem;
+  }
+  
+  .info-contacto {
     grid-template-columns: 1fr;
+    gap: 20px;
   }
 }
 
 @media (max-width: 480px) {
+  .hero {
+    height: 50vh;
+    min-height: 350px;
+    margin-top: 55px;
+  }
+  
   .hero h1 {
-    font-size: 2rem;
+    font-size: 1.8rem;
+  }
+  
+  .categoria-hero {
+    height: 40vh;
+    min-height: 300px;
   }
   
   nav ul {
-    display: none;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px 15px;
+  }
+  
+  .categorias-grid,
+  .productos-grid {
+    grid-template-columns: 1fr;
+    max-width: 300px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  .categoria-card {
+    height: 180px;
+  }
+  
+  .banner {
+    font-size: 1rem;
+    padding: 12px;
+  }
+  
+  footer {
+    padding: 25px 0 20px;
   }
 }
+
+/* ===== AJUSTES PARA EVITAR SUPERPONER ===== */
+.status-bar {
+  top: 0;
+  z-index: 2001;
+}
+
+header {
+  top: 30px; /* Ajustar según altura del status-bar */
+  z-index: 1000;
+}
+
+body {
+  padding-top: calc(65px + 30px); /* header + status-bar */
+}
+
+/* Asegurar que las imágenes no se desborden */
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Ajustar altura del hero en páginas de categoría */
+.categoria-hero {
+  margin-top: calc(65px + 30px);
+}
+
+/* Espaciado vertical consistente */
+section {
+  margin-bottom: 0;
+}
+
+/* ===== UTILIDADES ===== */
+.mt-1 { margin-top: 0.5rem; }
+.mt-2 { margin-top: 1rem; }
+.mt-3 { margin-top: 1.5rem; }
+.mt-4 { margin-top: 2rem; }
+
+.mb-1 { margin-bottom: 0.5rem; }
+.mb-2 { margin-bottom: 1rem; }
+.mb-3 { margin-bottom: 1.5rem; }
+.mb-4 { margin-bottom: 2rem; }
+
+.text-center { text-align: center; }
+.text-primary { color: var(--primary); }
+.text-small { font-size: 0.85rem; }
